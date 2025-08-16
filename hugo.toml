@@ -3,6 +3,22 @@ languageCode = "en-us"
 title = "hi. sun"
 theme = "typo"
 
+# 마크다운 렌더링 설정
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # HTML 태그 허용
+      hardWraps = true  # 단일 줄바꿈을 <br> 태그로 변환
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+  [markup.highlight]
+    style = "github"  # 코드 하이라이트 스타일
+    lineNos = false   # 줄 번호 비활성화 (테마 호환성)
+    lineNumbersInTable = false
+    noClasses = true  # 인라인 스타일 사용 (테마 호환성 향상)
+
 # 페이지네이션 완전 비활성화
 [pagination]
   pagerSize = 10000
