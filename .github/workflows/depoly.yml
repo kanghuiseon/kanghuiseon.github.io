@@ -3,7 +3,7 @@ name: Deploy Hugo site to GitHub Pages
 on:
   push:
     branches:
-      - master  # master 브랜치에 push 될 때마다 실행됨
+      - main  # master 브랜치에 push 될 때마다 실행됨
 
 permissions:
   contents: write  # gh-pages 브랜치에 write 권한
