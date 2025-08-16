@@ -1,0 +1,8 @@
+baseURL = "https://blog.hisun.cloud/"
+languageCode = "en-us"
+title = "Hello, World!"
+theme = "typo"
+
+[params]
+  homeCollection = "posts"
+  homeCollectionTitle = "Posts"
