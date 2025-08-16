@@ -5,10 +5,10 @@
 
   <h1>{{ .Title }}</h1>
   {{ .Content }} {{/* 모든 posts 섹션의 페이지를 가져오기 */}} {{ $allPosts :=
-  where .Site.RegularPages "Section" "eq" "posts" }} {{/* 날짜순으로 정렬 (최신
-  글 먼저) */}} {{ $sortedPosts := $allPosts.ByDate.Reverse }} {{/* 연도별로
-  그룹핑 */}} {{ $groups := $sortedPosts.GroupByDate "2006" }} {{/* 연도별로
-  표시 */}} {{ range $groups }}
+  where .Site.RegularPages "Section" "eq" "posts" }} {{/* weight 우선, 그 다음
+  날짜순으로 정렬 (최신 글 먼저) */}} {{ $sortedPosts :=
+  $allPosts.ByWeight.ByDate.Reverse }} {{/* 연도별로 그룹핑 */}} {{ $groups :=
+  $sortedPosts.GroupByDate "2006" }} {{/* 연도별로 표시 */}} {{ range $groups }}
   <h3 style="color: #1e40af; font-weight: 600">{{ .Key }}</h3>
   <ul>
     {{ range .Pages }}

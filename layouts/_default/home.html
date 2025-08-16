@@ -40,7 +40,7 @@
     {{ end }}
 
     {{ $pages := where .Site.RegularPages "Section" .Site.Params.homeCollection }}
-    {{ $sortedPages := $pages.ByDate.Reverse }}
+    {{ $sortedPages := $pages.ByWeight.ByDate.Reverse }}
     {{ $groups := $sortedPages.GroupByDate "2006" }}
 
     {{/* 연도별로 표시 */}}

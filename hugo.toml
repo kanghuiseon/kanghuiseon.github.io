@@ -1,7 +1,11 @@
 baseURL = "https://blog.hisun.cloud/"
-languageCode = "en-us"
+languageCode = "ko-kr"
 title = "hi. sun"
 theme = "typo"
+
+# 한글 URL 처리 개선
+removePathAccents = false
+disablePathToLower = false
 
 # 마크다운 렌더링 설정
 [markup]
