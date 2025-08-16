@@ -3,6 +3,15 @@ languageCode = "en-us"
 title = "hi. sun"
 theme = "typo"
 
+# 페이지네이션 완전 비활성화
+[pagination]
+  pagerSize = 10000
+  
+# 섹션별 설정
+[sections]
+  posts = "posts"
+
 [params]
-  homeCollection = "posts"
-  homeCollectionTitle = "Posts"
+  homeCollection = "posts"  # 홈페이지에서 posts 컬렉션 표시
+  homeCollectionTitle = "posts"
+  paginationSize = 0  # 페이지네이션 완전 비활성화
