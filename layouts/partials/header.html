@@ -2,12 +2,11 @@
 
 <div class="header">
 
-    {{ if or (not (.Param "hideHeader")) .IsHome }}
-
     <h1 class="header-title" style="text-decoration: underline;">
         <a href="{{ site.BaseURL }}">{{ site.Title }}</a>
     </h1>
 
+    {{ if or (not (.Param "hideHeader")) .IsHome }}
     <div class="header-menu">
         {{ $currentPage := . }}
 
@@ -24,7 +23,6 @@
         {{ end }}
         {{ end }}
     </div>
-
     {{ end }}
 
 </div>
