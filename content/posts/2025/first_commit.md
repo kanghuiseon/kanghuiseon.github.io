@@ -1,7 +1,7 @@
 ---
 title: 'first commit'
 date: 2025-08-16
-weight: 5
+weight: 6
 ---
 
 블로그를 쓰려고 합니다.

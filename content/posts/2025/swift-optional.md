@@ -1,7 +1,7 @@
 ---
 title: 'Optional 생각해보기'
 date: 2025-08-17
-weight: 1
+weight: 2
 slug: "swift-optional"
 ---
 
