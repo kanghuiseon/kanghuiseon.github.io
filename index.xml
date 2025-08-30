@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home on hi. sun</title><link>https://blog.hisun.cloud/</link><description>Recent content in Home on hi. sun</description><generator>Hugo</generator><language>ko-kr</language><lastBuildDate>Sat, 30 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.hisun.cloud/index.xml" rel="self" type="application/rss+xml"/><item><title>코드 일관성은 왜 중요할까</title><link>https://blog.hisun.cloud/posts/2025/codeconsistency/</link><pubDate>Sat, 30 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/codeconsistency/</guid><description>&lt;p>요즘 테스트 코드의 필요성을 점점 느끼고 있다.&lt;br>
+그런데 고민을 하다보면 코드의 일관성이 중요하다는 생각이 뚜렷해지고 있다.&lt;br>
+예를 들어서, request, response 모델을 만들때 무조건 특정 방식으로 똑같이 찍어내듯이 짜야 한다는 것이다&lt;/p>
+&lt;p>왜 코드를 일관성 있게 짜야 할까? 우선 세가지를 들 수 있다.&lt;/p>
+&lt;ol>
+&lt;li>가독성: 같은 패턴으로 작성된 코드는 새로운 사람이 와도 빠르게 이해할 수 잇다.&lt;/li>
+&lt;li>유지보수성: 규칙이 있으면 리팩토링이나 스펙 변경 때 특정 위치만 집중적으로 관찰할 수 있어서 사이드 이펙트가 줄어들 수 있다.&lt;/li>
+&lt;li>테스트 용이성: 위에서 예시로 든 것처럼 request/response 모델이 동일한 규칙(Codable, naming 등등)으로 정의되어있으면 테스트 코드 구현 시에도 편하다.&lt;/li>
+&lt;/ol>
+&lt;p>예시로 Request/Response에서는 어떻게 일관성을 챙길 수 있을까?&lt;/p></description></item><item><title>읽기쉬운코드란?</title><link>https://blog.hisun.cloud/posts/2025/post-0825/</link><pubDate>Mon, 25 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/post-0825/</guid><description>&lt;p>여전히 읽기 쉬운 코드를 짜는 것이 어렵다. 그렇다면 왜 어려운 걸까? 어떻게 하면 코드를 더 잘 짤 수 있을까?&lt;/p>
+&lt;p>단순히 다른 사람의 코드를 열심히 찾아보고 학습해야 하는 걸까? 하지만 지금은 작은 스타트업, 그것도 세네 명밖에 없는 팀에서 일하고 있다. 그런 환경에서는 참고할 코드나 리뷰 문화도 부족하다.&lt;/p>
+&lt;p>여전히 어려운 문제이고 현재 진행중이지만, 적어도 내가 읽기 쉬운 코드를 짜려고 노력한다.&lt;br>
+버그가 발생했을 때 이 코드를 처음 마주한 제3자의 눈에는 어떻게 비칠지, 어떤 맥락으로 이해될지를 고민한다.&lt;/p></description></item><item><title>DataSource Test?</title><link>https://blog.hisun.cloud/posts/2025/datasource-test/</link><pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/datasource-test/</guid><description>&lt;p>회사에서 DataSource 테스트 시스템을 구축할 일이 생겼다.&lt;br>
+DataSource 테스트란 무엇일까?&lt;br>
+DataSource 레이어에서는 어떤 테스트를 해야 할까?&lt;/p>
+&lt;p>만약 Repository 구현체의 테스트 코드를 작성한다고 가정하면, 실제 API를 호출해서 테스트하기엔 여러 문제가 있다. 테스트가 느려지고, 네트워크 환경에 따라 통신이 실패할 수도 있으며, DB의 데이터가 변경되면 테스트가 깨질 수도 있다. 게다가 테스트 요청이 POST라면? 실제 서버의 프로덕션 환경을 오염시킬 위험도 있다. (목업용 서버가 없다는 가정하에)&lt;br>
+그렇다면 서버와 강결합된 상태에서 Repository 구현체의 테스트 코드를 작성하는 것이 과연 의미 있는 테스트일까?&lt;/p></description></item><item><title>Optional 생각해보기</title><link>https://blog.hisun.cloud/posts/2025/swift-optional/</link><pubDate>Sun, 17 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/swift-optional/</guid><description>&lt;p>&lt;a href="https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Optional.swift">https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Optional.swift&lt;/a>&lt;/p>
+&lt;h2 class="heading" id="구현">
+ 구현
+ &lt;a class="anchor" href="#%ea%b5%ac%ed%98%84">#&lt;/a>
+&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-swift" data-lang="swift">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">enum&lt;/span> &lt;span class="nc">Optional&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Wrapped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">case&lt;/span> &lt;span class="kr">none&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">case&lt;/span> &lt;span class="n">some&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Wrapped&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>실제 구현은 이렇게 생기진 않았지만 대충 중요하것만 본다면 위와 같이 볼 수 있다.&lt;/p>
+&lt;p>메모리에 실제 값이 없는 경우, cpu에서 접근 시 런타임에서 크래시가 나서 앱이 죽을 수 있다.&lt;/p>
+&lt;p>그래서 임의의 Optional enum타입을 생성해서 해당 변수를 한번 감싸서 해당 문제를 해결하였다.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-swift" data-lang="swift">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">let&lt;/span> &lt;span class="nv">num&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">Optional&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nb">Int&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="kr">none&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>이런식으로 값이 없음을 나타낼 수 있으며, swift에서는 위의 문법을 짧게 let num: Int? = nil 로 표현할 수 있도록 하였다.&lt;/p>
+&lt;p>아마 Optional.none을 표현하는 키워드로 nil을 등록한것이 아닐까 싶다.&lt;/p></description></item><item><title>Clean Agile</title><link>https://blog.hisun.cloud/posts/2025/clean-agile/</link><pubDate>Sun, 17 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/clean-agile/</guid><description>&lt;p>구현 가능성에 대한 검토를 언제 해야하는 것인가?&lt;br>
+희망이 프로젝트를 죽이기 전에 희망을 파괴할 수 있다&lt;br>
+애자일은 우리가 얼마나 망했는지를 최대한 빨리 아는 것이다&lt;/p>
+&lt;p>스토리를 최대한 완료시키려는 것이 중요하지 작업 속도를 높이려는 것은 아니다. 진행 상황을 보다 구체적이고 측정하기 좋게 만들려는 것이며, 신뢰할 수 있는 데이터를 얻기 위한 것이다.&lt;br>
+완료의 기준은 인수 테스트 통과이다. 완료 티켓으로 넘기기 전에 테스트 통과하는 것을 보고 넘기도록 한다.&lt;br>
+TDD 작성할때에는 각 스토리 별로 작성을 해야 한다. 왜냐하면 스토리는 독립적이고 언제든 개별로 배포가 가능한 수준이기 때문에 테스트에도 의존성이 존재하면 안된다.&lt;br>
+정상에서 벗어난 경로도 함께 생각해야 한다. 시스템을 망가뜨리는 궁리를 함께 해야 한다&lt;br>
+여기서 QA의 역할은 단순히 테스트만 하는 사람이 아니라 프로젝트 초기에 명세를 작성하는 사람으로 바뀐다.&lt;br>
+문제를 예방할 수 있도록 이끌어야 한다.&lt;/p></description></item><item><title>Bool?은 어떤 의미인가?</title><link>https://blog.hisun.cloud/posts/2025/what-is-bool-optional/</link><pubDate>Sat, 16 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/what-is-bool-optional/</guid><description>&lt;p>여기에 글 내용을 작성하세요.&lt;/p></description></item><item><title>도커!?</title><link>https://blog.hisun.cloud/posts/2025/%EB%8F%84%EC%BB%A4/</link><pubDate>Sat, 16 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/%EB%8F%84%EC%BB%A4/</guid><description>&lt;p>왜 iOS개발자의 블로그 두번째 글부터 제목이 도커냐고 한다면,,&lt;br>
+조금 부끄럽지만 최근까지 도커에 대해 잘 몰랐다.&lt;br>
+그러다가 문득 몰라도 될까? 라는 생각이 들었고 바로 제일 가까운 백엔드 개발자에게 하루만에 도커에 대해 알고 있는 모든 지식을 전수해달라고 했다.&lt;/p>
+&lt;p>사실 하루가지고는 좀 부족했지만 대애애충 이런 느낌이겠구나 정도는 알게 되었다.&lt;br>
+간단히 말하면 &amp;lsquo;컨테이너 기술&amp;rsquo;을 쉽게 사용할 수 있게 만드는 플랫폼이다.&lt;br>
+여기서 말하는 컨테이너란, 코드 + 의존성 + 환경 설정 파일들을 모두 포함해서 격리시킨 후 패키징해서 어디서 실행해도 동일한 결과를 보장한다.&lt;/p></description></item><item><title>first commit</title><link>https://blog.hisun.cloud/posts/2025/first_commit/</link><pubDate>Sat, 16 Aug 2025 00:00:00 +0000</pubDate><guid>https://blog.hisun.cloud/posts/2025/first_commit/</guid><description>&lt;p>블로그를 쓰려고 합니다.&lt;br>
+우선은 개발 얘기를 하려고 하는데요. 사실 정해진 것은 없습니다.&lt;br>
+제 맘대로 쓸 예정입니다.&lt;/p></description></item></channel></rss>

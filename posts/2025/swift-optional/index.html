@@ -1,0 +1,97 @@
+<!doctype html><html lang=ko-kr dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel=stylesheet><link rel=icon type=image/ico href=https://blog.hisun.cloud/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://blog.hisun.cloud/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://blog.hisun.cloud/favicon-32x32.png><link rel=icon type=image/png sizes=192x192 href=https://blog.hisun.cloud/android-chrome-192x192.png><link rel=apple-touch-icon sizes=180x180 href=https://blog.hisun.cloud/apple-touch-icon.png><meta name=description content><title>Optional 생각해보기 | hi. sun</title><link rel=canonical href=https://blog.hisun.cloud/posts/2025/swift-optional/><meta property="og:url" content="https://blog.hisun.cloud/posts/2025/swift-optional/"><meta property="og:site_name" content="hi. sun"><meta property="og:title" content="Optional 생각해보기"><meta property="og:description" content="https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Optional.swift
+구현 # enum Optional<Wrapped> { case none case some(Wrapped) } 실제 구현은 이렇게 생기진 않았지만 대충 중요하것만 본다면 위와 같이 볼 수 있다.
+메모리에 실제 값이 없는 경우, cpu에서 접근 시 런타임에서 크래시가 나서 앱이 죽을 수 있다.
+그래서 임의의 Optional enum타입을 생성해서 해당 변수를 한번 감싸서 해당 문제를 해결하였다.
+let num: Optional<Int> = .none 이런식으로 값이 없음을 나타낼 수 있으며, swift에서는 위의 문법을 짧게 let num: Int? = nil 로 표현할 수 있도록 하였다.
+아마 Optional.none을 표현하는 키워드로 nil을 등록한것이 아닐까 싶다."><meta property="og:locale" content="ko_kr"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-08-17T00:00:00+00:00"><meta property="article:modified_time" content="2025-08-17T00:00:00+00:00"><link rel=stylesheet href=/assets/combined.min.468ce5bcc45a023cff87fd09b84577db1b1d2d3be0ee908218889ca775c7cd62.css media=all></head><body class=auto><div class=content><header><div class=header><h1 class=header-title style=text-decoration:underline><a href=https://blog.hisun.cloud/>hi. sun</a></h1><div class=header-menu></div></div></header><main class=main><div class=breadcrumbs><a href=/>Home</a><span class=breadcrumbs-separator>/</span><a href=/posts/>posts</a><span class=breadcrumbs-separator>/</span>
+<a href=/posts/2025/swift-optional/>Optional 생각해보기</a></div><div><article><header class=single-intro-container><h1 class=single-title>Optional 생각해보기</h1><div class=single-subsummary><div><p class=single-date><time datetime=2025-08-17T00:00:00+00:00>August 17, 2025</time></p></div></div></header><div class=single-content><p><a href=https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Optional.swift>https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Optional.swift</a></p><h2 class=heading id=구현>구현
+<a class=anchor href=#%ea%b5%ac%ed%98%84>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>enum</span> <span class=nc>Optional</span><span class=p>&lt;</span><span class=n>Wrapped</span><span class=p>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=kr>none</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=n>some</span><span class=p>(</span><span class=n>Wrapped</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>실제 구현은 이렇게 생기진 않았지만 대충 중요하것만 본다면 위와 같이 볼 수 있다.</p><p>메모리에 실제 값이 없는 경우, cpu에서 접근 시 런타임에서 크래시가 나서 앱이 죽을 수 있다.</p><p>그래서 임의의 Optional enum타입을 생성해서 해당 변수를 한번 감싸서 해당 문제를 해결하였다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>let</span> <span class=nv>num</span><span class=p>:</span> <span class=nb>Optional</span><span class=p>&lt;</span><span class=nb>Int</span><span class=p>&gt;</span> <span class=p>=</span> <span class=p>.</span><span class=kr>none</span>
+</span></span></code></pre></div><p>이런식으로 값이 없음을 나타낼 수 있으며, swift에서는 위의 문법을 짧게 let num: Int? = nil 로 표현할 수 있도록 하였다.</p><p>아마 Optional.none을 표현하는 키워드로 nil을 등록한것이 아닐까 싶다.</p><p><code>Optional&lt;Wrapped></code> 값은 특수한 방식으로 내부의 Wrapped값을 추출할 수 있다.</p><ol><li>if let value = optionalValue</li><li>guard let value = optionalValue else { return }</li></ol><p>위의 두 가지 방식은</p><p>애플에서 내부구현으로 .some(Wrapped)의 연관값을 쉽게 꺼내서 쓸 수 있도록 하였을 것이다.</p><p>아래와 같이 생각하면 좋을 것 같다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>let</span> <span class=nv>num</span><span class=p>:</span> <span class=nb>Int</span><span class=p>?</span> <span class=p>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>switch</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=p>.</span><span class=kr>none</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=bp>print</span><span class=p>(</span><span class=s>&#34;nil입니다.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=kd>let</span> <span class=nv>value</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=bp>print</span><span class=p>(</span><span class=s>&#34;</span><span class=si>\(</span><span class=n>value</span><span class=si>)</span><span class=s>가 있습니다.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>-&gt;</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=kd>let</span> <span class=nv>value</span><span class=p>)</span> <span class=p>=</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>-&gt;</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=kd>let</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=n>value</span><span class=p>)</span> <span class=p>=</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>-&gt;</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=kd>let</span> <span class=nv>value</span> <span class=p>=</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 class=heading id=map>map
+<a class=anchor href=#map>#</a></h3><p>Optional은 enum 값이어서 extension을 추가할 수 있다.</p><p>Optional 실제 코드를 보다가 map을 하는 코드가 있었는데, 사알짝 이해가 안되어서 적어본다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>extension</span> <span class=nc>Optional</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>func</span> <span class=nf>map</span><span class=p>&lt;</span><span class=n>U</span><span class=p>&gt;(</span><span class=kc>_</span> <span class=n>transform</span><span class=p>:</span> <span class=p>(</span><span class=n>Wrapped</span><span class=p>)</span> <span class=kr>throws</span> <span class=p>-&gt;</span> <span class=n>U</span><span class=p>)</span> <span class=kr>rethrows</span> <span class=p>-&gt;</span> <span class=n>U</span><span class=p>?</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>switch</span> <span class=kc>self</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=p>.</span><span class=kr>none</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>.</span><span class=kr>none</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=kd>let</span> <span class=nv>value</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=k>try</span> <span class=n>transform</span><span class=p>(</span><span class=n>value</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>let</span> <span class=nv>num</span><span class=p>:</span> <span class=nb>Optional</span><span class=p>&lt;</span><span class=nb>Int</span><span class=p>&gt;</span> <span class=p>=</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kd>let</span> <span class=nv>mappedNum</span> <span class=p>=</span> <span class=n>num</span><span class=p>.</span><span class=bp>map</span> <span class=p>{</span> <span class=nv>$0</span> <span class=o>*</span> <span class=mi>2</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=bp>print</span><span class=p>(</span><span class=n>mappedNum</span><span class=p>)</span>
+</span></span></code></pre></div><p>대충 이런 식의 코드였음(내가 짬)<br>저 코드를 짜기 위한 생각의 흐름을 예측해보자.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>enum</span> <span class=nc>Optional</span><span class=p>&lt;</span><span class=n>Wrapped</span><span class=p>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=kr>none</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=n>some</span><span class=p>(</span><span class=n>Wrapped</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>let</span> <span class=nv>num1</span><span class=p>:</span> <span class=nb>Optional</span><span class=p>&lt;</span><span class=nb>Int</span><span class=p>&gt;</span> <span class=p>=</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// -&gt; num1의 2배의 값을 구하고 싶다.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nv>num2</span> <span class=p>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=kd>let</span> <span class=nv>num</span><span class=p>)</span> <span class=p>=</span> <span class=n>num1</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>num2</span> <span class=p>=</span> <span class=n>num</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=bp>print</span><span class=p>(</span><span class=n>num2</span><span class=p>)</span>
+</span></span></code></pre></div><p>num1의 두 배의 값을 구하고 싶다. 그럼 if case문으로 연관값을 벗겨내고 원하는 값(두 배인 6)을 얻을 수 있을것이다.<br>그런데 저 벗겨내는 작업이 너무 번거롭고 코드의 수도 많다.<br>그래서 기존의 map이라는 함수를 Optional에도 추가하고 싶다.<br>입력 <code>Optional&lt;Wrapped></code>에 대해서 새로운 타입 U로 변환해야 한다.<br>출력은 여전히 <code>Optional&lt;U></code>로 유지해야 한다.<br>그래서 해당 함수의 반환 타입은 <code>Optional&lt;U></code>가 되어야 한다.</p><h3 class=heading id=예외-처리>예외 처리
+<a class=anchor href=#%ec%98%88%ec%99%b8-%ec%b2%98%eb%a6%ac>#</a></h3><p>만약 변환 과정에서 오류가 발생할 수도 있다면?<br>변환 실패까지 고려해서 transform클로저가 예외를 던질 수 있도록 해야 한다.<br>그래서 throws를 붙여서 예외를 던질 수 있도록 해야 한다.<br>(Wrapped) throws → U<br>이렇게 되면 map 자체도 에러를 던질 수 있는 상태여야 한다.<br>그래서 transform이 throws 일 때 map도 throws가 되어야 한다.</p><p><code>func map&lt;U>(_ transform: (Wrapped) throws → U) rethrows → U?</code></p><h3 class=heading id=결과>결과
+<a class=anchor href=#%ea%b2%b0%ea%b3%bc>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>extension</span> <span class=nc>Optional</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>func</span> <span class=nf>map</span><span class=p>&lt;</span><span class=n>U</span><span class=p>&gt;(</span><span class=kc>_</span> <span class=n>transform</span><span class=p>:</span> <span class=p>(</span><span class=n>Wrapped</span><span class=p>)</span> <span class=kr>throws</span> <span class=p>-&gt;</span> <span class=n>U</span><span class=p>)</span> <span class=kr>rethrows</span> <span class=p>-&gt;</span> <span class=n>U</span><span class=p>?</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>switch</span> <span class=kc>self</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=p>.</span><span class=kr>none</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>.</span><span class=kr>none</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=kd>let</span> <span class=nv>wrapped</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=k>try</span> <span class=n>transform</span><span class=p>(</span><span class=n>wrapped</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h2 class=heading id=옵셔널-패턴>옵셔널 패턴
+<a class=anchor href=#%ec%98%b5%ec%85%94%eb%84%90-%ed%8c%a8%ed%84%b4>#</a></h2><p>옵셔널 타입인 경우에 값을 벗겨낼때 편하게 벗겨내기 위해서 추가된 기능이다.</p><h3 class=heading id=기존>기존
+<a class=anchor href=#%ea%b8%b0%ec%a1%b4>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>let</span> <span class=nv>num</span><span class=p>:</span> <span class=nb>Int</span><span class=p>?</span> <span class=p>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=kd>let</span> <span class=nv>x</span><span class=p>)</span> <span class=p>=</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=bp>print</span><span class=p>(</span><span class=s>&#34;x&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>// or</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=kd>let</span> <span class=p>.</span><span class=n>some</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=p>=</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=bp>print</span><span class=p>(</span><span class=s>&#34;x&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 class=heading id=적용>적용
+<a class=anchor href=#%ec%a0%81%ec%9a%a9>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=line><span class=cl><span class=kd>let</span> <span class=nv>num</span><span class=p>:</span> <span class=nb>Int</span><span class=p>?</span> <span class=p>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=k>case</span> <span class=kd>let</span> <span class=nv>x</span><span class=p>?</span> <span class=p>=</span> <span class=n>num</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=bp>print</span><span class=p>(</span><span class=s>&#34;x&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>기존의 코드는 굉장히 번거롭다. 그래서 .some(x)를 x?로 간단하게 표기하는 기능을 추가했다.</p></div></article><div class=single-pagination><hr><div class=flexnowrap><div class=single-pagination-prev><div class=single-pagination-container-prev><div class=single-pagination-text>←</div><div class=single-pagination-text><a href=/posts/2025/clean-agile/>Clean Agile</a></div></div></div><div class=single-pagination-next><div class=single-pagination-container-next><div class=single-pagination-text><a href=/posts/2025/datasource-test/>DataSource Test?</a></div><div class=single-pagination-text>→</div></div></div></div><hr></div><div class=back-to-top><a href=#top>back to top</a></div></div></main></div><footer><p>Powered by
+<a href=https://gohugo.io/>Hugo</a>
+and
+<a href=https://github.com/tomfran/typo>tomfran/typo</a></p></footer></body><script src=/js/theme-switch.js></script><script defer src=/js/copy-code.js></script></html>
