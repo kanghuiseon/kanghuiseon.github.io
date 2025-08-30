@@ -1,8 +1,8 @@
 ---
 title: 'Optional 생각해보기'
 date: 2025-08-17
-weight: 5
-slug: "swift-optional"
+weight: 4
+slug: 'swift-optional'
 ---
 
 https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Optional.swift
@@ -30,12 +30,12 @@ let num: Optional<Int> = .none
 
 아마 Optional.none을 표현하는 키워드로 nil을 등록한것이 아닐까 싶다.
 
-``Optional<Wrapped>`` 값은 특수한 방식으로 내부의 Wrapped값을 추출할 수 있다.
+`Optional<Wrapped>` 값은 특수한 방식으로 내부의 Wrapped값을 추출할 수 있다.
 
 1. if let value = optionalValue
 2. guard let value = optionalValue else { return }
 
-위의 두 가지 방식은 
+위의 두 가지 방식은
 
 애플에서 내부구현으로 .some(Wrapped)의 연관값을 쉽게 꺼내서 쓸 수 있도록 하였을 것이다.
 
@@ -112,11 +112,12 @@ print(num2)
 num1의 두 배의 값을 구하고 싶다. 그럼 if case문으로 연관값을 벗겨내고 원하는 값(두 배인 6)을 얻을 수 있을것이다.
 그런데 저 벗겨내는 작업이 너무 번거롭고 코드의 수도 많다.
 그래서 기존의 map이라는 함수를 Optional에도 추가하고 싶다.
-입력 ``Optional<Wrapped>``에 대해서 새로운 타입 U로 변환해야 한다.
-출력은 여전히 ``Optional<U>``로 유지해야 한다. 
-그래서 해당 함수의 반환 타입은 ``Optional<U>``가 되어야 한다.
+입력 `Optional<Wrapped>`에 대해서 새로운 타입 U로 변환해야 한다.
+출력은 여전히 `Optional<U>`로 유지해야 한다.
+그래서 해당 함수의 반환 타입은 `Optional<U>`가 되어야 한다.
 
 ### 예외 처리
+
 만약 변환 과정에서 오류가 발생할 수도 있다면?
 변환 실패까지 고려해서 transform클로저가 예외를 던질 수 있도록 해야 한다.
 그래서 throws를 붙여서 예외를 던질 수 있도록 해야 한다.
@@ -124,9 +125,10 @@ num1의 두 배의 값을 구하고 싶다. 그럼 if case문으로 연관값을
 이렇게 되면 map 자체도 에러를 던질 수 있는 상태여야 한다.
 그래서 transform이 throws 일 때 map도 throws가 되어야 한다.
 
-``func map<U>(_ transform: (Wrapped) throws → U) rethrows → U?``
+`func map<U>(_ transform: (Wrapped) throws → U) rethrows → U?`
 
 ### 결과
+
 ```swift
 extension Optional {
     func map<U>(_ transform: (Wrapped) throws -> U) rethrows -> U? {
@@ -145,6 +147,7 @@ extension Optional {
 옵셔널 타입인 경우에 값을 벗겨낼때 편하게 벗겨내기 위해서 추가된 기능이다.
 
 ### 기존
+
 ```swift
 let num: Int? = 3
 
@@ -159,6 +162,7 @@ if case let .some(x) = num {
 ```
 
 ### 적용
+
 ```swift
 let num: Int? = 3
 

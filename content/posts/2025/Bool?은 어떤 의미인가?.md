@@ -1,7 +1,7 @@
 ---
 title: 'Bool?은 어떤 의미인가?'
 date: 2025-08-16
-weight: 7
+weight: 6
 slug: 'what-is-bool-optional'
 ---
 

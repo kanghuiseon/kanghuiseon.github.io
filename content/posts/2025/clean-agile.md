@@ -1,8 +1,8 @@
 ---
 title: 'Clean Agile'
 date: 2025-08-17
-weight: 6
-slug: "clean-agile"
+weight: 5
+slug: 'clean-agile'
 ---
 
 구현 가능성에 대한 검토를 언제 해야하는 것인가?
