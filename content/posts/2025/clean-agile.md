@@ -1,7 +1,7 @@
 ---
 title: 'Clean Agile'
 date: 2025-08-17
-weight: 5
+weight: 6
 slug: "clean-agile"
 ---
 

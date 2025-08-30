@@ -1,7 +1,7 @@
 ---
 title: '성장 고오민'
 date: 2025-08-25
-weight: 1
+weight: 2
 slug: "power-up"
 ---
 
